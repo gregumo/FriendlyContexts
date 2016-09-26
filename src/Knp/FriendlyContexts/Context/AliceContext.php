@@ -40,6 +40,11 @@ class AliceContext extends Context
             if (in_array($id, $files)) {
                 foreach ($loader->load($fixture) as $object) {
                     if (in_array(get_class($object), $persistable)) {
+                        if($object->getId())
+                        {
+                            $metadata = $this->getEntityManager()->getClassMetaData(get_class($object));
+                            $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+                        }
                         $this->getEntityManager()->persist($object);
                     }
                 }
