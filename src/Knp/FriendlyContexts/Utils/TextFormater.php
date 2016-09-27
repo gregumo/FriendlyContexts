@@ -84,7 +84,7 @@ class TextFormater
             $part = explode($link, $part);
             if (count($part)%2 == 0) {
                 for ($ii = 0; $ii < count($part); $ii += 2) {
-                    $keyValueTable[$part[$ii]] = $part[$ii+1];
+                    $keyValueTable[trim($part[$ii])] = trim($part[$ii+1]);
                 }
             } else {
                 throw new \Exception('Key whithout value in list');
