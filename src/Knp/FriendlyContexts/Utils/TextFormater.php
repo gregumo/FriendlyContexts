@@ -52,7 +52,7 @@ class TextFormater
         return implode("\n", $lines). "\n";
     }
 
-    public function listToArray($list, $delimiters = [', ', ' and '], $parser = "#||#")
+    public function listToArray($list, $delimiters = [', ', ' and '], $parser = "#||#", $link = ':')
     {
         $list  = str_replace('"', '', $list);
 
@@ -64,12 +64,36 @@ class TextFormater
             throw new \Exception(sprintf('The list must be a string, not a "%s" element', gettype($list)));
         }
 
-        $parts = explode($parser, $list);
+        if (false != strpos($list, $parser)) {
+            $parts = explode($parser, $list);
+        }
+
+        if (false != strpos($list, $link)) {
+            $parts = $this->orderKeyValueTable($parts, $link);
+        }
 
         $parts = array_map('trim', $parts);
         $parts = array_filter($parts, 'strlen');
 
         return $parts;
+    }
+
+    protected function orderKeyValueTable($parts, $link) {
+
+        $keyValueTable = [];
+
+        foreach ($parts as $part) {
+            $part = explode($link, $part);
+            if (count($part)%2 == 0) {
+                for ($ii = 0; $ii < count($part); $ii += 2) {
+                    $keyValueTable[$part[$ii]] = $part[$ii+1];
+                }
+            } else {
+                throw new \Exception('List with link cant be odd');
+            }
+        }
+
+        return $keyValueTable;
     }
 
     protected function getDimentions(array $array)
