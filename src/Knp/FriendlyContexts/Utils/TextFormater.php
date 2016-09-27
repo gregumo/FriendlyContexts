@@ -87,7 +87,7 @@ class TextFormater
                     $keyValueTable[$part[$ii]] = $part[$ii+1];
                 }
             } else {
-                throw new \Exception('List with link cant be odd');
+                throw new \Exception('Key whithout value in list');
             }
         }
 
