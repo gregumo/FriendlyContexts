@@ -64,9 +64,7 @@ class TextFormater
             throw new \Exception(sprintf('The list must be a string, not a "%s" element', gettype($list)));
         }
 
-        if (false != strpos($list, $parser)) {
-            $parts = explode($parser, $list);
-        }
+        $parts = explode($parser, $list);
 
         if (false != strpos($list, $link)) {
             $parts = $this->orderKeyValueTable($parts, $link);
