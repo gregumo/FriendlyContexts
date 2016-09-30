@@ -58,7 +58,7 @@ class Asserter
                 do {
                     $content = array_shift($columns);
                     $result = $columnElement
-                        ? $content === $columnElement->getContent()
+                        ? $content === trim($columnElement->getContent())
                         : false
                     ;
                     $columnElement = $columnElement ? $columnElement->getRight() : null;
